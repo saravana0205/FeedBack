@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.istrides.feedback">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.istrides.ranjeetfeedback">
+
+	<uses-permission android:name="android.permission.INTERNET"/>
 
 	<application
 		android:allowBackup="true"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
 		android:hardwareAccelerated="true"
-		android:roundIcon="@mipmap/ic_launcher_round"
+		android:icon="@mipmap/ic_launcher_logo"
+		android:label="@string/app_name"
+		android:roundIcon="@mipmap/ic_launcher_logo"
 		android:supportsRtl="true"
-		android:theme="@style/AppTheme">
-		<activity android:name=".MainActivity">
+		android:theme="@style/AppTheme"
+		tools:ignore="LockedOrientationActivity">
+		<activity
+			android:name=".SplashScreenActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"
+			android:screenOrientation="portrait">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
+				<action android:name="android.intent.action.VIEW" />
 
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		<activity android:name=".ThankYouActivity"
+			android:windowSoftInputMode="stateAlwaysHidden"/>
+		<activity android:name=".ServiceRatingActivity"
+		          android:label="Give Your Feedback"
+			android:exported="true"/>
+		<activity
+			android:name=".BaseActivity"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name=".FloorSelectionActivity"
+			android:windowSoftInputMode="stateAlwaysHidden" />
+		<activity android:name=".EmployeeSelectionActivity"
+		          android:label="Employee Selection"
+		          android:windowSoftInputMode="stateAlwaysHidden"
+		          android:launchMode="singleTask"/>
 	</application>
 
 </manifest>

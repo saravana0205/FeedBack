@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+                                       xmlns:tools="http://schemas.android.com/tools"
+                                       android:layout_width="match_parent"
+                                       android:layout_height="match_parent"
+                                       android:animateLayoutChanges="true"
+                                       android:background="#f5f5f5"
+                                       android:fillViewport="true"
+                                       tools:context="com.istrides.ranjeetfeedback.ServiceRatingActivity">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/logo"
+			android:layout_width="@dimen/_50sdp"
+			android:layout_height="@dimen/_50sdp"
+			android:layout_marginStart="@dimen/_2sdp"
+			android:src="@drawable/logo"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/nameLogo"
+			android:layout_width="0dp"
+			android:layout_height="@dimen/_40sdp"
+			android:layout_marginEnd="@dimen/_2sdp"
+			android:src="@drawable/logo_name"
+			app:layout_constraintBottom_toBottomOf="@+id/logo"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/logo"
+			app:layout_constraintTop_toTopOf="@+id/logo"
+			app:layout_constraintVertical_bias="0.6" />
+
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/selectedFloor"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="@dimen/_2sdp"
+			android:layout_marginTop="@dimen/_10sdp"
+			android:clickable="true"
+			android:clipToPadding="false"
+			android:elevation="@dimen/_2sdp"
+			android:foreground="?android:selectableItemBackground"
+			app:cardUseCompatPadding="true"
+			app:layout_constraintTop_toBottomOf="@+id/logo">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:padding="@dimen/_8sdp"
+				android:weightSum="2">
+
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="Floor 3: ACS"
+					android:textAlignment="viewStart"
+					android:textColor="@android:color/black"
+					android:textSize="@dimen/font_size_large" />
+
+				<TextView
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="Surya Yadav"
+					android:textAlignment="viewEnd"
+					android:textColor="@android:color/black"
+					android:textSize="@dimen/font_size_large" />
+
+			</LinearLayout>
+
+		</com.google.android.material.card.MaterialCardView>
+
+		<com.google.android.material.card.MaterialCardView
+			android:id="@+id/userInput"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="@dimen/_2sdp"
+			android:clipToPadding="false"
+			android:elevation="@dimen/_2sdp"
+			app:cardUseCompatPadding="true"
+			app:layout_constraintTop_toBottomOf="@+id/selectedFloor">
+
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+				<com.google.android.material.textfield.TextInputLayout
+					android:id="@+id/mobileLayout"
+					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_margin="@dimen/_10sdp"
+					android:hint="@string/mobile_number"
+					app:endIconMode="clear_text"
+					app:hintAnimationEnabled="true"
+					app:layout_constraintEnd_toStartOf="@+id/emailLayout"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent">
+
+					<com.google.android.material.textfield.TextInputEditText
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:imeOptions="actionNext"
+						android:inputType="phone"
+						android:maxLength="10"
+						android:maxLines="1"
+						android:nextFocusRight="@+id/emailLayout" />
+
+				</com.google.android.material.textfield.TextInputLayout>
+
+				<com.google.android.material.textfield.TextInputLayout
+					android:id="@+id/emailLayout"
+					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_margin="@dimen/_10sdp"
+					android:hint="Email(optional)"
+					app:endIconMode="clear_text"
+					app:hintAnimationEnabled="true"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintHorizontal_bias="0.5"
+					app:layout_constraintStart_toEndOf="@+id/mobileLayout"
+					app:layout_constraintTop_toTopOf="parent">
+
+					<com.google.android.material.textfield.TextInputEditText
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:inputType="textEmailAddress"
+						android:maxLines="1" />
+
+				</com.google.android.material.textfield.TextInputLayout>
+
+				<com.google.android.material.textfield.TextInputLayout
+					android:id="@+id/nameLayout"
+					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_margin="@dimen/_10sdp"
+					android:hint="@string/your_name"
+					app:endIconMode="clear_text"
+					app:hintAnimationEnabled="true"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/mobileLayout">
+
+					<com.google.android.material.textfield.TextInputEditText
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:imeOptions="actionDone"
+						android:maxLines="1"
+						android:singleLine="true" />
+
+				</com.google.android.material.textfield.TextInputLayout>
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
+		</com.google.android.material.card.MaterialCardView>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:id="@+id/linearLayout"
+			app:layout_constraintTop_toBottomOf="@+id/userInput">
+
+			<include layout="@layout/item_r_layout" />
+
+			<include layout="@layout/item_r_layout" />
+
+			<include layout="@layout/item_r_layout" />
+
+			<include layout="@layout/item_r_layout" />
+
+			<include layout="@layout/item_r_layout" />
+
+		</LinearLayout>
+
+		<com.google.android.material.button.MaterialButton
+			android:id="@+id/submit"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginHorizontal="@dimen/_2sdp"
+			android:text="SUBMIT"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

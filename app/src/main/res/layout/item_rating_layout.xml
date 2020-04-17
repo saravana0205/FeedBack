@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:tools="http://schemas.android.com/tools">
+
+	<com.google.android.material.card.MaterialCardView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="@dimen/_2sdp"
+		android:layout_marginVertical="@dimen/_2sdp"
+		app:cardElevation="4dp"
+		app:cardMaxElevation="4dp"
+		app:cardUseCompatPadding="true">
+
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="@dimen/_3sdp"
+			android:orientation="vertical">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/_4sdp"
+				android:id="@+id/question"
+				app:layout_constraintTop_toTopOf="parent"
+				android:text="How was your payment service?"
+				android:textColor="@android:color/black"
+				android:textSize="@dimen/font_size_medium" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/_4sdp"
+				app:layout_constraintTop_toBottomOf="@+id/question"
+				android:text="Not at all likely"
+				android:id="@+id/notAtAll"
+				app:layout_constraintStart_toStartOf="parent"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/_4sdp"
+				app:layout_constraintTop_toTopOf="@+id/notAtAll"
+				app:layout_constraintBottom_toBottomOf="@+id/notAtAll"
+				android:text="Extremely likely"
+				android:id="@+id/extremelyLike"
+				app:layout_constraintEnd_toEndOf="parent"/>
+
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				app:layout_constraintTop_toBottomOf="@+id/question"
+				android:visibility="gone"
+				android:layout_margin="@dimen/_3sdp"
+				android:orientation="horizontal"
+				android:weightSum="5">
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/sl1"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:orientation="vertical">
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:id="@+id/worstLogo"
+						android:layout_width="@dimen/_40sdp"
+						android:layout_height="@dimen/_40sdp"
+						android:layout_gravity="center"
+						android:src="@drawable/worst"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/worstLayout"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginHorizontal="@dimen/_2sdp"
+						android:background="@drawable/unselected_border"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/worstLogo">
+
+						<androidx.appcompat.widget.AppCompatImageView
+							android:id="@+id/worstTick"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_margin="@dimen/_2sdp"
+							android:src="@drawable/ic_tick"
+							android:visibility="gone"
+							app:layout_constraintBottom_toBottomOf="@+id/worst"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="@+id/worst" />
+
+						<TextView
+							android:id="@+id/worst"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:padding="@dimen/_5sdp"
+							android:text="Worst"
+							android:textSize="@dimen/font_size_small"
+							android:textStyle="bold"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/worstTick"
+							app:layout_constraintTop_toTopOf="parent" />
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/sl2"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:orientation="vertical">
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:id="@+id/badLogo"
+						android:layout_width="@dimen/_40sdp"
+						android:layout_height="@dimen/_40sdp"
+						android:layout_gravity="center"
+						android:src="@drawable/bad"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginHorizontal="@dimen/_2sdp"
+						android:id="@+id/badLayout"
+						android:background="@drawable/unselected_border"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/badLogo">
+
+						<androidx.appcompat.widget.AppCompatImageView
+							android:id="@+id/badTick"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_margin="@dimen/_2sdp"
+							android:src="@drawable/ic_tick"
+							android:visibility="gone"
+							app:layout_constraintBottom_toBottomOf="@+id/bad"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="@+id/bad" />
+
+						<TextView
+							android:id="@+id/bad"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:minWidth="@dimen/_20sdp"
+							android:padding="@dimen/_5sdp"
+							android:text="Bad"
+							android:textSize="@dimen/font_size_small"
+							android:textStyle="bold"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/badTick"
+							app:layout_constraintTop_toTopOf="parent" />
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/sl3"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:orientation="vertical">
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:id="@+id/averageLogo"
+						android:layout_width="@dimen/_40sdp"
+						android:layout_height="@dimen/_40sdp"
+						android:layout_gravity="center"
+						android:src="@drawable/average"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/averageLayout"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginHorizontal="@dimen/_2sdp"
+						android:background="@drawable/unselected_border"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/averageLogo">
+
+						<androidx.appcompat.widget.AppCompatImageView
+							android:id="@+id/averageTick"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_margin="@dimen/_2sdp"
+							android:src="@drawable/ic_tick"
+							android:visibility="gone"
+							app:layout_constraintBottom_toBottomOf="@+id/average"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="@+id/average" />
+
+						<TextView
+							android:id="@+id/average"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:minWidth="@dimen/_25sdp"
+							android:padding="@dimen/_5sdp"
+							android:text="Average"
+							android:textSize="@dimen/font_size_small"
+							android:textStyle="bold"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/averageTick"
+							app:layout_constraintTop_toTopOf="parent" />
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/sl4"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:orientation="vertical">
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:id="@+id/goodLogo"
+						android:layout_width="@dimen/_40sdp"
+						android:layout_height="@dimen/_40sdp"
+						android:layout_gravity="center"
+						android:src="@drawable/good"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/goodLayout"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginHorizontal="@dimen/_2sdp"
+						android:background="@drawable/unselected_border"
+						app:layout_constraintBottom_toBottomOf="parent"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/goodLogo">
+
+						<androidx.appcompat.widget.AppCompatImageView
+							android:id="@+id/goodTick"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_margin="@dimen/_2sdp"
+							android:src="@drawable/ic_tick"
+							android:visibility="gone"
+							app:layout_constraintBottom_toBottomOf="@+id/good"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="@+id/good" />
+
+						<TextView
+							android:id="@+id/good"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:padding="@dimen/_5sdp"
+							android:text="Good"
+							android:textSize="@dimen/font_size_small"
+							android:textStyle="bold"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/goodTick"
+							app:layout_constraintTop_toTopOf="parent" />
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:id="@+id/sl5"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:orientation="vertical">
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:id="@+id/awesomeLogo"
+						android:layout_width="@dimen/_40sdp"
+						android:layout_height="@dimen/_40sdp"
+						android:layout_gravity="center"
+						android:src="@drawable/awesome"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toTopOf="parent" />
+
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginHorizontal="@dimen/_2sdp"
+						android:background="@drawable/unselected_border"
+						app:layout_constraintBottom_toBottomOf="parent"
+						android:id="@+id/awesomeLayout"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintStart_toStartOf="parent"
+						app:layout_constraintTop_toBottomOf="@+id/awesomeLogo">
+
+						<androidx.appcompat.widget.AppCompatImageView
+							android:id="@+id/awesomeTick"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_margin="@dimen/_2sdp"
+							android:src="@drawable/ic_tick"
+							android:visibility="gone"
+							app:layout_constraintBottom_toBottomOf="@+id/awesome"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="@+id/awesome" />
+
+						<TextView
+							android:id="@+id/awesome"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:padding="@dimen/_5sdp"
+							android:text="Awesome"
+							android:textSize="@dimen/font_size_small"
+							android:textStyle="bold"
+							app:layout_constraintBottom_toBottomOf="parent"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toEndOf="@+id/awesomeTick"
+							app:layout_constraintTop_toTopOf="parent" />
+
+					</androidx.constraintlayout.widget.ConstraintLayout>
+
+				</androidx.constraintlayout.widget.ConstraintLayout>
+
+			</LinearLayout>
+
+			<RelativeLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toBottomOf="@+id/notAtAll">
+
+				<androidx.recyclerview.widget.RecyclerView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_centerHorizontal="true"
+					android:layout_gravity="center"
+					android:id="@+id/recyclerView"/>
+
+			</RelativeLayout>
+
+		</androidx.constraintlayout.widget.ConstraintLayout>
+
+	</com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

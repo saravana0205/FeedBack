@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "782097190691",
+    "firebase_url": "https://ranjeet-feedback.firebaseio.com",
+    "project_id": "ranjeet-feedback",
+    "storage_bucket": "ranjeet-feedback.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782097190691:android:78070b1e6eb1171d78c696",
+        "android_client_info": {
+          "package_name": "com.istrides.ranjeetfeedback"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782097190691-99lcdrcd02sn4bclboop1rdp1jv8sicu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ijRM21bxDeNbO7uPdCG7fJfnua4GlI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782097190691-99lcdrcd02sn4bclboop1rdp1jv8sicu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
