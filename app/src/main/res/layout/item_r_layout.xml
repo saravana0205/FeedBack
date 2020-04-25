@@ -7,6 +7,7 @@
 	<com.google.android.material.card.MaterialCardView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:id="@+id/questionCard"
 		android:layout_marginHorizontal="@dimen/_4sdp"
 		android:layout_marginVertical="@dimen/_2sdp"
 		app:cardElevation="4dp"
@@ -27,7 +28,8 @@
 				app:layout_constraintTop_toTopOf="parent"
 				android:text="How was your payment service?"
 				android:textColor="@android:color/black"
-				android:textSize="@dimen/font_size_medium" />
+				android:textStyle="bold"
+				android:textSize="@dimen/font_size_normal" />
 
 			<TextView
 				android:layout_width="wrap_content"

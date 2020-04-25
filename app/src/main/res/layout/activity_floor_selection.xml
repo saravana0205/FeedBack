@@ -37,7 +37,7 @@
 			app:layout_constraintTop_toBottomOf="@+id/logo" />
 
 		<TextView
-			android:layout_width="match_parent"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="@dimen/_10sdp"
 			android:text="@string/select_floor"
@@ -46,115 +46,29 @@
 			android:textColor="@android:color/black"
 			android:textSize="@dimen/font_size_xxlarge"
 			android:textStyle="bold"
+			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/nameLogo" />
 
-		<com.google.android.material.card.MaterialCardView
-			android:id="@+id/firstFloor"
+		<androidx.appcompat.widget.AppCompatImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/refresh"
+			android:src="@drawable/ic_refresh_black_24dp"
+			app:layout_constraintTop_toTopOf="@+id/selectFloor"
+			app:layout_constraintBottom_toBottomOf="@+id/selectFloor"
+			app:layout_constraintEnd_toEndOf="parent"
+			android:layout_margin="@dimen/_5sdp"/>
+
+		<androidx.recyclerview.widget.RecyclerView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="@dimen/_10sdp"
-			android:clickable="true"
-			android:clipToPadding="false"
-			android:elevation="@dimen/_4sdp"
-			android:focusable="true"
-			android:foreground="?android:selectableItemBackground"
-			app:cardUseCompatPadding="true"
-			app:layout_constraintTop_toBottomOf="@+id/selectFloor">
-
-			<androidx.constraintlayout.widget.ConstraintLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="@drawable/image">
-
-				<TextView
-					android:id="@+id/txt_floor_3"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="@dimen/_15sdp"
-					android:text="Floor 1: JR - Retail"
-					android:textAlignment="center"
-					android:textColor="@android:color/black"
-					android:textSize="@dimen/font_size_xxlarge"
-					android:textStyle="bold"
-					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintEnd_toEndOf="parent"
-					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toTopOf="parent" />
-
-			</androidx.constraintlayout.widget.ConstraintLayout>
-
-		</com.google.android.material.card.MaterialCardView>
-
-		<com.google.android.material.card.MaterialCardView
-			android:id="@+id/secondFloor"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="@dimen/_10sdp"
-			android:clickable="true"
-			android:clipToPadding="false"
-			android:elevation="@dimen/_4sdp"
-			android:focusable="true"
-			android:foreground="?android:selectableItemBackground"
-			app:cardUseCompatPadding="true"
-			app:layout_constraintTop_toBottomOf="@+id/firstFloor">
-
-			<androidx.constraintlayout.widget.ConstraintLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="@drawable/image">
-
-				<TextView
-					android:id="@+id/txt_floor_2"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="@dimen/_15sdp"
-					android:text="Floor 2: JR - Wholesale"
-					android:textAlignment="center"
-					android:textColor="@android:color/black"
-					android:textSize="@dimen/font_size_xxlarge"
-					android:textStyle="bold"
-					app:layout_constraintBottom_toBottomOf="parent"
-					app:layout_constraintTop_toTopOf="parent" />
-
-			</androidx.constraintlayout.widget.ConstraintLayout>
-
-		</com.google.android.material.card.MaterialCardView>
-
-		<com.google.android.material.card.MaterialCardView
-			android:id="@+id/thirdFloor"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginHorizontal="@dimen/_10sdp"
-			android:clickable="true"
-			android:clipToPadding="false"
-			android:elevation="@dimen/_4sdp"
-			android:focusable="true"
-			android:foreground="?android:selectableItemBackground"
-			app:cardUseCompatPadding="true"
+			android:id="@+id/floorItem"
 			app:layout_constraintVertical_bias="0"
-			app:layout_constraintTop_toBottomOf="@+id/secondFloor">
-
-			<androidx.constraintlayout.widget.ConstraintLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="@drawable/image">
-
-				<TextView
-					android:id="@+id/txt_floor_1"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="@dimen/_15sdp"
-					android:text="Floor 3: ACS"
-					android:textAlignment="center"
-					android:textColor="@android:color/black"
-					android:textSize="@dimen/font_size_xxlarge"
-					android:textStyle="bold"
-					app:layout_constraintTop_toTopOf="parent" />
-
-			</androidx.constraintlayout.widget.ConstraintLayout>
-
-		</com.google.android.material.card.MaterialCardView>
+			android:layout_marginHorizontal="@dimen/_10sdp"
+			android:layout_marginBottom="@dimen/_10sdp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/selectFloor"/>
 
 	</androidx.constraintlayout.widget.ConstraintLayout>
 

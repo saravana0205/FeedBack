@@ -62,7 +62,7 @@
 			android:id="@+id/thankSub"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:text="Thank you for your feedback! this will help us to improve our service"
+			android:text="Thank you for your feedback!\nThis will help us to improve our service."
 			android:textAlignment="center"
 			android:textColor="@android:color/black"
 			android:textSize="@dimen/font_size_small"

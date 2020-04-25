@@ -1,34 +1,48 @@
 package com.istrides.ranjeetfeedback;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.istrides.ranjeetfeedback.Retrofit.Api;
+import com.istrides.ranjeetfeedback.Retrofit.RetrofitService;
+import com.istrides.ranjeetfeedback.common.QuestionRating;
+import com.istrides.ranjeetfeedback.common.SharedPreference;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class ServiceRatingActivity extends AppCompatActivity implements View.OnClickListener
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class ServiceRatingActivity extends AppCompatActivity
 {
-	ConstraintLayout sl1, sl2, sl3, sl4, sl5,worstLayout,badLayout,averageLayout,goodLayout,awesomeLayout;
-	AppCompatImageView worstTick, badTick, averageTick, goodTick, awesomeTick;
-	TextView worst,bad,average,good, awesome, a0, a1,a2,a3,a4,a5,a6,a7,a8,a9,a10 ;
-	List<HashMap<String, String>> arrayList = new ArrayList<>();
+	JsonArray arrayList = new JsonArray();
+	TextView floorName, employeeName;
+	TextInputEditText phoneNumber, email, name;
+	RecyclerView questionItem;
+	QuestionRating questionRating;
+	AlertDialog alertDialog;
+	int i;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -38,188 +52,124 @@ public class ServiceRatingActivity extends AppCompatActivity implements View.OnC
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#403B82")));
 		MaterialButton submit = findViewById(R.id.submit);
-		a0 = findViewById(R.id.a0);
-		a1 = findViewById(R.id.a1);
-		a2 = findViewById(R.id.a2);
-		a3 = findViewById(R.id.a3);
-		a4 = findViewById(R.id.a4);
-		a5 = findViewById(R.id.a5);
-		a6 = findViewById(R.id.a6);
-		a7 = findViewById(R.id.a7);
-		a8 = findViewById(R.id.a8);
-		a9 = findViewById(R.id.a9);
-		a10 = findViewById(R.id.a10);
-		a0.setOnClickListener(this);
-		a1.setOnClickListener(this);
-		a2.setOnClickListener(this);
-		a3.setOnClickListener(this);
-		a4.setOnClickListener(this);
-		a5.setOnClickListener(this);
-		a6.setOnClickListener(this);
-		a7.setOnClickListener(this);
-		a8.setOnClickListener(this);
-		a9.setOnClickListener(this);
-		a10.setOnClickListener(this);
-		worst = findViewById(R.id.worst);
-		bad = findViewById(R.id.bad);
-		average = findViewById(R.id.average);
-		good = findViewById(R.id.good);
-		awesome = findViewById(R.id.awesome);
-		worstTick = findViewById(R.id.worstTick);
-		badTick = findViewById(R.id.badTick);
-		averageTick = findViewById(R.id.averageTick);
-		goodTick = findViewById(R.id.goodTick);
-		awesomeTick = findViewById(R.id.awesomeTick);
-		worstLayout = findViewById(R.id.worstLayout);
-		badLayout = findViewById(R.id.badLayout);
-		averageLayout = findViewById(R.id.averageLayout);
-		goodLayout = findViewById(R.id.goodLayout);
-		awesomeLayout = findViewById(R.id.awesomeLayout);
-		/*RecyclerView recyclerView = findViewById(R.id.recyclerView);
-		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-		linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
-		recyclerView.setLayoutManager(linearLayoutManager);
-		CustomAdapter customAdapter = new CustomAdapter(this, getValue());
-		recyclerView.setAdapter(customAdapter);*/
-		sl1 = findViewById(R.id.sl1);
-		sl2 = findViewById(R.id.sl2);
-		sl3 = findViewById(R.id.sl3);
-		sl4 = findViewById(R.id.sl4);
-		sl5 = findViewById(R.id.sl5);
-		sl1.setOnClickListener(this);
-		sl2.setOnClickListener(this);
-		sl3.setOnClickListener(this);
-		sl4.setOnClickListener(this);
-		sl5.setOnClickListener(this);
-		submit.setOnClickListener(new View.OnClickListener()
+		SharedPreference sharedPreference = new SharedPreference(this);
+		questionRating = new QuestionRating(this);
+		phoneNumber = findViewById(R.id.phoneNumber);
+		email = findViewById(R.id.email);
+		name = findViewById(R.id.name);
+		floorName = findViewById(R.id.floorName);
+		questionItem = findViewById(R.id.questionItem);
+		employeeName = findViewById(R.id.employeeName);
+		floorName.setText(sharedPreference.getFloorName());
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+		questionItem.setLayoutManager(linearLayoutManager);
+		ViewGroup viewGroup = findViewById(android.R.id.content);
+		View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_loader, viewGroup, false);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setView(dialogView);
+		alertDialog = builder.create();
+		alertDialog.show();
+		getQuestionList();
+		employeeName.setText(sharedPreference.getEmployeeName());
+		submit.setOnClickListener(v -> {
+			if(phoneNumber.getText().toString().isEmpty() || phoneNumber.getText().toString().length() != 10)
+			{
+				phoneNumber.setError("Mobile number mandatory");
+				phoneNumber.requestFocus();
+				InputMethodManager inputMethodManager = (InputMethodManager) ServiceRatingActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputMethodManager.toggleSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+			}
+			else if(name.getText().toString().isEmpty())
+			{
+				name.setError("Name is mandatory");
+				name.requestFocus();
+				InputMethodManager inputMethodManager = (InputMethodManager) ServiceRatingActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+				inputMethodManager.toggleSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+			}
+			else
+			{
+				for(i = 1; i < 6; i++)
+				{
+					JsonObject ratingMap = new JsonObject();
+					ratingMap.addProperty("question_id", "" + i);
+					if(questionRating.getRating("" + i) == -1)
+					{
+						Snackbar.make(v, "Rate All the Questions ", Snackbar.LENGTH_LONG).show();
+						arrayList = new JsonArray();
+						break;
+					}
+					ratingMap.addProperty("question_rating", questionRating.getRating("" + i));
+					arrayList.add(ratingMap);
+				}
+				if(i == 6)
+				{
+					alertDialog.show();
+					JsonObject map = new JsonObject();
+					map.addProperty("FloorId", "" + sharedPreference.getFloorId());
+					map.addProperty("EmployeeId", "" + sharedPreference.getEmployeeId());
+					map.addProperty("customer_name", "" + name.getText().toString());
+					map.addProperty("customer_mobile", "" + phoneNumber.getText().toString());
+					map.addProperty("customer_email", "" + email.getText().toString());
+					map.addProperty("question_details", "" + arrayList);
+					sendRating(map);
+				}
+			}
+
+		});
+	}
+
+	void sendRating(JsonObject ratingMap)
+	{
+		Api api = RetrofitService.createService(Api.class);
+		api.customer_rating(ratingMap).enqueue(new Callback<QuestionResponse>()
 		{
 			@Override
-			public void onClick(View v)
+			public void onResponse(@NonNull Call<QuestionResponse> call, @NonNull Response<QuestionResponse> response)
 			{
-				startActivity(new Intent(ServiceRatingActivity.this, ThankYouActivity.class));
+				alertDialog.dismiss();
+				if(response.isSuccessful())
+				{
+					if(response.body().getOutput().get(0).getStatus().equals("success"))
+					{
+						startActivity(new Intent(ServiceRatingActivity.this, ThankYouActivity.class));
+					}
+				}
+			}
+
+			@Override
+			public void onFailure(@NonNull Call<QuestionResponse> call, @NonNull Throwable t)
+			{
+				alertDialog.dismiss();
+				t.printStackTrace();
 			}
 		});
 	}
 
-	private List getValue()
+	void getQuestionList()
 	{
-//		ArrayList numbers = new ArrayList<>(Arrays.asList("0","1", "2", "3", "4", "5", "6", "7","8","9","10"));
-		for(int i=0;i<=10;i++)
+		HashMap<String, Object> loginObject = new HashMap<>();
+		loginObject.put("apk_key", "question_list");
+		Api api = RetrofitService.createService(Api.class);
+		api.question_list(loginObject).enqueue(new Callback<QuestionResponse>()
 		{
-			HashMap<String,String> numbers = new HashMap<>();
-			numbers.put("value", "" + i);
-			numbers.put("active", "0");
-			arrayList.add(numbers);
-		}
-		Log.d("s2s", "prob " + arrayList.toString());
-		return arrayList;
-	}
+			@Override
+			public void onResponse(@NonNull Call<QuestionResponse> call, @NonNull Response<QuestionResponse> response)
+			{
+				alertDialog.dismiss();
+				if(response.isSuccessful())
+				{
+					QuestionAdapter customAdapter = new QuestionAdapter(ServiceRatingActivity.this, response.body());
+					questionItem.setAdapter(customAdapter);
+				}
+			}
 
-	@Override
-	public void onClick(View v)
-	{
-		a0.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a1.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a2.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a3.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a4.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a5.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a6.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a7.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a8.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a9.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a10.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_background));
-		a0.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a1.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a2.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a3.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a4.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a5.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a6.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a7.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a8.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a9.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		a10.setTextColor(ContextCompat.getColor(this,R.color.themeColor));
-		switch(v.getId())
-		{
-			case R.id.a0:
-				a0.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a0.setTextColor(Color.WHITE);
-				break;
-			case R.id.a1:
-				a1.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a1.setTextColor(Color.WHITE);
-				break;
-			case R.id.a2:
-				a2.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a2.setTextColor(Color.WHITE);
-				break;
-			case R.id.a3:
-				a3.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a3.setTextColor(Color.WHITE);
-				break;
-			case R.id.a4:
-				a4.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a4.setTextColor(Color.WHITE);
-				break;
-			case R.id.a5:
-				a5.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a5.setTextColor(Color.WHITE);
-				break;
-			case R.id.a6:
-				a6.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a6.setTextColor(Color.WHITE);
-				break;
-			case R.id.a7:
-				a7.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a7.setTextColor(Color.WHITE);
-				break;
-			case R.id.a8:
-				a8.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a8.setTextColor(Color.WHITE);
-				break;
-			case R.id.a9:
-				a9.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a9.setTextColor(Color.WHITE);
-				break;
-			case R.id.a10:
-				a10.setBackground(ContextCompat.getDrawable(this,R.drawable.rating_selected_border));
-				a10.setTextColor(Color.WHITE);
-				break;
-		}
-		worstLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.unselected_border));
-		badLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.unselected_border));
-		averageLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.unselected_border));
-		goodLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.unselected_border));
-		awesomeLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.unselected_border));
-		worst.setTextColor(Color.BLACK);
-		bad.setTextColor(Color.BLACK);
-		average.setTextColor(Color.BLACK);
-		good.setTextColor(Color.BLACK);
-		awesome.setTextColor(Color.BLACK);
-		switch(v.getId())
-		{
-			case R.id.sl1:
-				worstLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.selected_border));
-				worst.setTextColor(Color.WHITE);
-				break;
-			case R.id.sl2:
-				badLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.selected_border));
-				bad.setTextColor(Color.WHITE);
-				break;
-			case R.id.sl3:
-				averageLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.selected_border));
-				average.setTextColor(Color.WHITE);
-				break;
-			case R.id.sl4:
-				goodLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.selected_border));
-				good.setTextColor(Color.WHITE);
-				break;
-			case R.id.sl5:
-				awesomeLayout.setBackground(ContextCompat.getDrawable(this,R.drawable.selected_border));
-				awesome.setTextColor(Color.WHITE);
-				break;
-		}
+			@Override
+			public void onFailure(@NonNull Call<QuestionResponse> call, @NonNull Throwable t)
+			{
+				alertDialog.dismiss();
+				t.printStackTrace();
+			}
+		});
 	}
 
 	@Override
@@ -227,5 +177,12 @@ public class ServiceRatingActivity extends AppCompatActivity implements View.OnC
 	{
 		if(item.getItemId() == android.R.id.home) finish();
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		questionRating.clear();
 	}
 }

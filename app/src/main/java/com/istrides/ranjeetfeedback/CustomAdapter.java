@@ -18,7 +18,6 @@ import java.util.List;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder>
 {
-//	ArrayList personNames;
 	List<HashMap<String, String>> personNames = new ArrayList<>();
 	Context context;
 	int perivousSelect = -1 ;

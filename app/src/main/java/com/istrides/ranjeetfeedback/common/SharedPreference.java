@@ -13,11 +13,6 @@ public class SharedPreference
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
-	public void clear()
-	{
-		prefs.edit().clear().apply();
-	}
-
 	public void setBasePath(String path)
 	{
 		prefs.edit().putString("base_path", path).apply();
@@ -28,14 +23,45 @@ public class SharedPreference
 		return prefs.getString("base_path", "");
 	}
 
-	public void setFloor(int floor)
+	public void setFloorId(int floor)
 	{
-		prefs.edit().putInt("floor", floor).apply();
+		prefs.edit().putInt("floor_id", floor).apply();
 	}
 
-	public int getFloor()
+	public int getFloorId()
 	{
-		return prefs.getInt("floor", 0);
+		return prefs.getInt("floor_id", 0);
 	}
+
+	public void setFloorName(String floor)
+	{
+		prefs.edit().putString("floor_name", floor).apply();
+	}
+
+	public String getFloorName()
+	{
+		return prefs.getString("floor_name", "");
+	}
+
+	public void setEmployeeName(String floor)
+	{
+		prefs.edit().putString("employee_name", floor).apply();
+	}
+
+	public String getEmployeeName()
+	{
+		return prefs.getString("employee_name", "");
+	}
+
+	public void setEmployeeId(int floor)
+	{
+		prefs.edit().putInt("employee_id", floor).apply();
+	}
+
+	public int getEmployeeId()
+	{
+		return prefs.getInt("employee_id", 0);
+	}
+
 
 }
